@@ -35,9 +35,13 @@ def move_food(pos):
     add_food()
 
 
-def paint():
+def paint(message):
 
     SURFACE.fill((0,0,0))
+
+    for food in FOODS:
+        pygame.draw.ellipse(SURFACE,(0,255,0),Rect(food[0]*30, food[1]*30, 30, 30))
+        #타원 x좌표 y좌표 좌측상단  , 너비, 높이(아래로)
 
 
     #뱀 머리 그리기
@@ -49,11 +53,17 @@ def paint():
             pygame.draw.line(SURFACE, (64,64,64),(index*30,0), (index*30,600))
             pygame.draw.line(SURFACE, (64,64,64),(0,index*30), (600,index*30))
 
+    if message != None:
+        SURFACE.blit(message,(150,300))
+        #blit, != 다르다
+
     pygame.display.update()
 
     
 def main():
     """main_routine"""
+    myfont = pygame.font.SysFont(None, 80)
+    message = None
     key = K_DOWN
     game_over = False
     #뱀의 머리 xy 좌표 초기값 추가
@@ -83,6 +93,15 @@ def main():
             if key == K_DOWN:
                 head = (SNAKE[0][0], SNAKE[0][1]+1)
 
+        #game over 상황
+
+        # 머리가 snake 안에 있던가 머리의 x좌표가 맵을 벗어나거나 머리의 y좌표가 맵을 벗어나면 게임오버
+        if head in SNAKE or \
+                head[0]< 0 or head[0] >= W or \
+                    head[1]< 0 or head[1] >= H :
+                    message = myfont.render("Game Over", True, (255,255,0))
+                    game_over = True
+
         #add head 
         SNAKE.insert(0,head)
         #머리 앞에 하나 더 추가하고 뒤에 걸 안 지움
@@ -92,7 +111,7 @@ def main():
         else :
             SNAKE.pop()
 
-        paint()
+        paint(message)
         FPSCLOCK.tick(5)
     
 
@@ -101,3 +120,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
