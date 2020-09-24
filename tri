@@ -1,0 +1,44 @@
+import pygame
+import sys
+from pygame.locals import*
+
+pygame.init()
+
+screen = pygame.display.set_mode((640,480))
+FPSCLOCK = pygame.time.Clock()
+
+def main():
+    a = int(input("삼각형 한 변의 길이를 입력하시오."))
+    b = int(input("삼각형 한 변의 길이를 입력하시오."))
+    c = int(input("삼각형 한 변의 길이를 입력하시오."))
+
+   
+    
+    while True:
+        
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+
+        
+
+        screen.fill((255,255,255))
+        pygame.draw.line(screen,(255,0,0),(320,240),(320-a,240-a),5)
+        pygame.draw.line(screen,(255,0,0),(320,240),(320+b,240-b),5)
+        pygame.draw.line(screen,(255,0,0),(320-a,240-a),(320+b,240-b),5)
+    
+    
+
+        pygame.display.update() 
+        FPSCLOCK.tick(30)
+        
+
+
+
+
+
+if __name__ == '__main__':
+    main()
+
+
